@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  web:
+    build: .
+    container_name: shift_manager_web
+    command: "rails s -b 0.0.0.0"
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - webpack
+      - database
+    ports:
+      - "3030:3000"
+  webpack:
+    build: .
+    container_name: shift_manager_webpacker
+    command: ./bin/webpack-dev-server
+    ports:
+      - 3035:3035
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+  database:
+    image: postgres:12
+    container_name: shift_manager_db
+    volumes:
+      - .postgres/data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
