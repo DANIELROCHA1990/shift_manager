@@ -10,7 +10,6 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - webpacker
       - database
     ports:
       - "3030:3000"
@@ -18,6 +17,8 @@ services:
     image: shift_manager/ruby:latest
     container_name: shift_manager_webpacker
     command: ./bin/webpack-dev-server
+    depends_on:
+      - web
     ports:
       - 3035:3035
     environment:
