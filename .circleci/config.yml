@@ -1,0 +1,36 @@
+version: 2.1
+executors:
+  docker-compose:
+    docker:
+      - image: docker/compose:latest
+commands:
+  setup_environment:
+    steps:
+      - run:
+          name: Add Git
+          command: apk add git
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker Images
+          command: docker-compose build
+jobs:
+  lint:
+    executor: docker-compose
+    steps:
+      - setup_environment
+      - run:
+          name: Run Linter
+          command: docker-compose run web rubocop
+  test:
+    executor: docker-compose
+    steps:
+      - setup_environment
+      - run:
+          name: Run Tests
+          command: docker-compose run web rspec
+workflows:
+  run_lint_and_test:
+    jobs:
+      - lint
+      - test
