@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require "devise"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -18,5 +19,6 @@ module ShiftManager
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.factory_bot.definition_file_paths = ["custom/factories"]
   end
 end
