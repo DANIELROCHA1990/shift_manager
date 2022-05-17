@@ -39,6 +39,7 @@ group :development, :test do
   gem 'faker', '~> 2.19'
   # Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality
   gem 'shoulda-matchers', '~> 5.1'
+  gem 'rubocop'
 end
 
 group :development do
@@ -51,12 +52,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'devise', '~> 4.8', '>= 4.8.1'
-end
-
-# Run against this stable release
-group :development, :test do
-  gem 'rspec-rails', '~> 5.1'
-  gem 'rubocop'
 end
 
 group :test do
