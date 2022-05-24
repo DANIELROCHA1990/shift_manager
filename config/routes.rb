@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :home
   root to: 'home#index'
 
-  namespace :shift do
+  namespace :user do
     resources :users
   end
 end
