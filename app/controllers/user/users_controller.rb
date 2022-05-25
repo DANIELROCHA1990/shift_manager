@@ -1,4 +1,4 @@
-class Shift::UsersController < ApplicationController
+class User::UsersController < ApplicationController
   before_action :authenticate_user!
 
   def index
@@ -8,7 +8,6 @@ class Shift::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserNotifierMailer.send_signup_email(@user).deliver
       redirect_to(@user, notice: 'User Created')
     else
       render action: 'new'
