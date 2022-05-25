@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Shifts</h1>
+
+<div id="shifts">
+  <% @shifts.each do |shift| %>
+    <%= render shift %>
+    <p>
+      <%= link_to "Show this shift", shift %>
+    </p>
+  <% end %>
+</div>
+
+<%if user_signed_in? %>
+  <%= link_to "New shift",  new_user_shift_path  %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+  <%else%>
+    <h4><%= link_to "lOGIN",   new_user_session_path %><h4>
+<%end%>
+
