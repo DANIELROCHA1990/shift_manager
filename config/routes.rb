@@ -2,10 +2,12 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  resources :home
   root to: 'home#index'
 
   namespace :user do
-    resources :users
+    resources :users do
+      resources :shifts
+    end
+    resources :shifts
   end
 end
