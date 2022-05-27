@@ -1,5 +1,6 @@
 class User::UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: %i[show update destroy]
 
   def index
     render json: { message: 'You Done!' }, status: 200
@@ -18,5 +19,10 @@ class User::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
   end
 end
