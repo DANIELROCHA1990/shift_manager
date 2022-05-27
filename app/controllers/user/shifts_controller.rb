@@ -23,7 +23,7 @@ class User::ShiftsController < ApplicationController
 
     respond_to do |format|
       if @shift.save
-        format.html { redirect_to shift_url(@shift), notice: 'Shift was successfully created.' }
+        format.html { redirect_to action: 'show', user_id: current_user, id: @shift, notice: 'Shift was successfully created.' }
         format.json { render :show, status: :created, location: @shift }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +36,7 @@ class User::ShiftsController < ApplicationController
   def update
     respond_to do |format|
       if @shift.update(shift_params)
-        format.html { redirect_to shift_url(@shift), notice: 'Shift was successfully updated.' }
+        format.html { redirect_to action: 'show', user_id: current_user, id: @shift, notice: 'Shift was successfully updated.' }
         format.json { render :show, status: :ok, location: @shift }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class User::ShiftsController < ApplicationController
     @shift.destroy
 
     respond_to do |format|
-      format.html { redirect_to shifts_url, notice: 'Shift was successfully destroyed.' }
+      format.html { redirect_to action: 'index', user_id: current_user, notice: 'Shift was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,6 +64,6 @@ class User::ShiftsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def shift_params
-    params.require(:shift).permit(:current_day, :clock_in, :clock_out, :all_clock)
+    params.require(:shift).permit(:current_day, :clock_in, :clock_out, :all_clock, :user_id)
   end
 end
