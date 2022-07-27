@@ -1,0 +1,19 @@
+
+<table class="table table-bordered table-dark table-striped">
+  <thead class="text-center">
+    <tr>
+      <th scope="col">#Id</th>
+      <th scope="col">Clock_in</th>
+      <th scope="col">Clock_out</th>
+  </tr>
+  </thead>
+  <tbody class="text-center">
+    <%@shifts.each do |shift|%>
+      <tr>
+        <th scope="row"><%=shift.id%></th>
+        <td><%= shift.clock_in %></td>
+        <td><%= shift.clock_out %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
