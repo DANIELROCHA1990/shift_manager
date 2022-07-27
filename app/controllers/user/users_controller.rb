@@ -15,10 +15,21 @@ class User::UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(params[:user])
+      flash[:success] = 'Object was successfully updated'
+      redirect_to @user
+    else
+      flash[:error] = 'Something went wrong'
+      render 'edit'
+    end
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:user_name, :email, :password)
   end
 
   # Use callbacks to share common setup or constraints between actions.
