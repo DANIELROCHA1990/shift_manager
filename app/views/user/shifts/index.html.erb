@@ -1,20 +1,15 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Shifts</h1>
-
-<div id="shifts">
-  <% @shifts.each do |shift| %>
-    <%= render shift %>
-    <p>
-      <%= link_to "Show this shift", user_user_shift_path(current_user, shift.id) %>
-    </p>
+<div class='container'>
+  <% if @shift&.clock_in %>
+  <%#  BOTAO PRA UPDATE  %>
+    <div class='card'>
+      <h3> <%= DateTime.now - @shift.clock_in %> </h3>
+      <br /><%= link_to 'Clock Out', user_shift_path(@shift.id), method: :put, class: "btn btn-success mb-4"%>
+    </div>
+  <% else %>
+    <div class='card'>
+      <%= link_to 'Clock In', user_user_shifts_path(current_user.id), method: :post, class: "btn btn-success mb-4"%>
+    </div>
   <% end %>
+
+  <%= render 'shifts', shifts: @shifts %>
 </div>
-
-<%if user_signed_in? %>
-  <%= link_to "New shift",  new_user_user_shift_path(current_user)  %>
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-  <%else%>
-    <%= link_to "lOGIN", new_user_session_path %>
-<%end%>
-
