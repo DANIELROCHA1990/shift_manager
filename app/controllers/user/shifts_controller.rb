@@ -1,9 +1,11 @@
 class User::ShiftsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_shift, only: %i[show edit update destroy]
 
   # GET /shifts or /shifts.json
   def index
-    @shifts = current_user.shifts
+    @shifts = current_user.shifts.order(id: :desc)
+    @shift  = current_user.shifts.where(clock_out: nil).where.not(clock_in: nil).first
   end
 
   # GET /shifts/1 or /shifts/1.json
@@ -14,33 +16,35 @@ class User::ShiftsController < ApplicationController
     @shift = Shift.new
   end
 
-  # GET /shifts/1/edit
-  def edit; end
-
-  # POST /shifts or /shifts.json
+  # POST /shifts
   def create
-    @shift = Shift.new(shift_params.merge(user: current_user)) # quando criar ja mostra o id
-
+    @shift = Shift.new(user: current_user) # quando criar ja liga ao id
     respond_to do |format|
       if @shift.save
-        format.html { redirect_to action: 'show', user_id: current_user, id: @shift, notice: 'Shift was successfully created.' }
-        format.json { render :show, status: :created, location: @shift }
+        format.html do
+          redirect_to action: 'index', user_id: current_user,
+                      notice: 'Shift was successfully created.'
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /shifts/1 or /shifts/1.json
+  # GET /shifts/1/edit
+  def edit; end
+
+  # PATCH/PUT /shifts/1
   def update
+    @shift.set_clock_out
     respond_to do |format|
-      if @shift.update(shift_params)
-        format.html { redirect_to action: 'show', user_id: current_user, id: @shift, notice: 'Shift was successfully updated.' }
-        format.json { render :show, status: :ok, location: @shift }
+      if @shift.save
+        format.html do
+          redirect_to action: 'index', user_id: current_user,
+                      notice: 'Shift was successfully updated.'
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,10 +52,11 @@ class User::ShiftsController < ApplicationController
   # DELETE /shifts/1 or /shifts/1.json
   def destroy
     @shift.destroy
-
     respond_to do |format|
-      format.html { redirect_to action: 'index', user_id: current_user, notice: 'Shift was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html do
+        redirect_to action: 'index', user_id: current_user,
+                    notice: 'Shift was successfully destroyed.'
+      end
     end
   end
 
@@ -64,6 +69,6 @@ class User::ShiftsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def shift_params
-    params.require(:shift).permit(:current_day, :clock_in, :clock_out, :all_clock, :user_id)
+    params.require(:shift).permit(:clock_in, :clock_out, :user_id, :user_name)
   end
 end
