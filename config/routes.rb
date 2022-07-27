@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'home#index'
+  root to: 'user/shifts#index'
 
   namespace :user do
     resources :users do

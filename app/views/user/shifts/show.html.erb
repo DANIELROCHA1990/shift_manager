@@ -1,10 +1,10 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @shift %>
+<%= render @shift, url: user_user_shift_path(user_id: current_user.id, id: @shift.id), method: :get  %>
 
 <div>
-  <%= link_to "Edit this shift", edit_shift_path(@shift) %> |
-  <%= link_to "Back to shifts", shifts_path %>
+  <%= link_to "Edit this shift",  edit_user_user_shift_path(current_user, @shift) %> |
+  <%= link_to "Back to shifts", user_user_shifts_path(current_user) %>
 
-  <%= button_to "Destroy this shift", @shift, method: :delete %>
+  <%= button_to "Destroy this shift", user_user_shift_path(user_id: current_user.id), method: :delete%>
 </div>
