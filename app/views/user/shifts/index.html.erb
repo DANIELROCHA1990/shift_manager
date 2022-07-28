@@ -1,10 +1,8 @@
 <div class='container'>
   <% if @shift&.clock_in %>
     <div class='card text-center'>
-      <div id='time'>
-        <%time_diff = @shift.clock_in - 0.1.second.ago%>
-        <%elapsed_time = Time.at(time_diff.to_i.abs).strftime("%H:%M:%S")%>
-      </div>
+    <div id='time' data-clock-in='<%=@shift.clock_in%>'>
+      <%# <div id='time' data-elapsed="<%=Time.at((@shift.clock_in - 0.1.second.ago).to_i.abs).strftime("%H:%M:%S")%>
     </div>
     <div class='card'>
       <br /><%= link_to 'Clock Out', user_shift_path(@shift.id), method: :put, class: "btn btn-success mb-4"%>
@@ -16,11 +14,23 @@
   <% end %>
 
   <%= render 'shifts', shifts: @shifts %>
-</div>
+
 
 <script>
-(function timer () {
-	document.getElementById("time").innerHTML = "<%=elapsed_time%>";
-    setInterval(timer, 1000); // recalls the function after 1000 ms
-})();
+
+
+function timer () {
+  var clockInElement = document.getElementById('time')
+  var clockIn        = new Date(clockInElement.dataset.clockIn)
+  var currentTime    = new Date()
+  var timeDif        = (currentTime - clockIn)/1000
+  var hours          = timeDif / 3600
+  var mins           = (hours - parseInt(hours)) * 60
+  var secs           = (mins - parseInt(mins)) * 60
+
+  clockInElement.innerHTML = parseInt(hours) + ":" + parseInt(mins) + ":" + parseInt(secs)
+}
+
+setInterval(timer, 1000)
 </script>
+</div>
