@@ -1,9 +1,11 @@
 <div class='container'>
   <% if @shift&.clock_in %>
-    <div class='card'>
-      <%= render 'layouts/clock' %>
+    <div class='card text-center'>
+      <div id='time'>
+        <%time_diff = @shift.clock_in - 0.1.second.ago%>
+        <%elapsed_time = Time.at(time_diff.to_i.abs).strftime("%H:%M:%S")%>
+      </div>
     </div>
-  <%#  BOTAO PRA UPDATE  %>
     <div class='card'>
       <br /><%= link_to 'Clock Out', user_shift_path(@shift.id), method: :put, class: "btn btn-success mb-4"%>
     </div>
@@ -15,3 +17,10 @@
 
   <%= render 'shifts', shifts: @shifts %>
 </div>
+
+<script>
+(function timer () {
+	document.getElementById("time").innerHTML = "<%=elapsed_time%>";
+    setInterval(timer, 1000); // recalls the function after 1000 ms
+})();
+</script>
