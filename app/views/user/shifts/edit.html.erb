@@ -1,10 +1,1 @@
-<h1>Editing shift</h1>
-
-<%# <%= render "form", url: user_user_shift_path(user_id: current_user.id, id: @shift.id), method: :put %> %>
-
-<br>
-
-<div>
-  <%= link_to "Show this shift", user_user_shift_path(current_user, @shift) %> |
-  <%= link_to "Back to shifts", user_user_shifts_path(current_user) %>
-</div>
+<%= render "create_description", url: user_user_shift_path(current_user.id, @shift.id), method: :patch %>

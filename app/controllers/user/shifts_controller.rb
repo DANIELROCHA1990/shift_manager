@@ -1,6 +1,6 @@
 class User::ShiftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_shift, only: %i[show edit update destroy]
+  before_action :set_shift, only: %i[show edit update destroy new_description create_description]
 
   # GET /shifts or /shifts.json
   def index
@@ -22,8 +22,7 @@ class User::ShiftsController < ApplicationController
     respond_to do |format|
       if @shift.save
         format.html do
-          redirect_to action: 'index', user_id: current_user,
-                      notice: 'Shift was successfully created.'
+          redirect_to action: 'index', user_id: current_user
         end
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,11 +39,24 @@ class User::ShiftsController < ApplicationController
     respond_to do |format|
       if @shift.save
         format.html do
-          redirect_to action: 'index', user_id: current_user,
-                      notice: 'Shift was successfully updated.'
+          redirect_to action: 'index', user_id: current_user
         end
       else
         format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def new_description; end
+
+  def create_description
+    respond_to do |format|
+      if @shift.update(:description, params[:description])
+        format.html do
+          redirect_to action: 'index', user_id: current_user
+        end
+      else
+        format.html { render :description, status: :unprocessable_entity }
       end
     end
   end
@@ -54,8 +66,7 @@ class User::ShiftsController < ApplicationController
     @shift.destroy
     respond_to do |format|
       format.html do
-        redirect_to action: 'index', user_id: current_user,
-                    notice: 'Shift was successfully destroyed.'
+        redirect_to action: 'index', user_id: current_user
       end
     end
   end
@@ -69,6 +80,6 @@ class User::ShiftsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def shift_params
-    params.require(:shift).permit(:clock_in, :clock_out, :user_id, :user_name)
+    params.require(:shift).permit(:clock_in, :clock_out, :user_id, :user_name, :description)
   end
 end

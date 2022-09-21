@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_31_204426) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_02_170730) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_204426) do
     t.datetime "clock_out"
     t.string "user_name"
     t.bigint "user_id", null: false
+    t.string "description"
     t.index ["user_id"], name: "index_shifts_on_user_id"
   end
 
