@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+
+  <td><%= @shift.description %></td>
+  <td><%= @shift.user_name %></td>
+
+<div>
+  <%= link_to "Voltar", user_user_shifts_path(current_user), class: "btn btn-outline-secondary" %>
+</div>
