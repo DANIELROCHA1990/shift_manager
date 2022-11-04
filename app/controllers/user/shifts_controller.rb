@@ -67,7 +67,7 @@ class User::ShiftsController < ApplicationController
 
   def create_user_description
     respond_to do |format|
-      if @shift.update_attribute(:description, params[:description])
+      if @shift.update_attribute(:description, shift_params[:description])
         format.html do
           redirect_to action: 'index', user_id: current_user
         end
