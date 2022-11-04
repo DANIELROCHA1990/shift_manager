@@ -1,6 +1,10 @@
 class User::ShiftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_shift, only: %i[show edit update destroy new_description create_description]
+  before_action :set_shift, only: %i[show edit update destroy
+                                     show_user_description
+                                     new_user_description
+                                     create_user_description]
+  attr_accessor :description
 
   # GET /shifts or /shifts.json
   def index
@@ -47,26 +51,28 @@ class User::ShiftsController < ApplicationController
     end
   end
 
-  def new_description; end
-
-  def create_description
-    respond_to do |format|
-      if @shift.update(:description, params[:description])
-        format.html do
-          redirect_to action: 'index', user_id: current_user
-        end
-      else
-        format.html { render :description, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /shifts/1 or /shifts/1.json
   def destroy
     @shift.destroy
     respond_to do |format|
       format.html do
         redirect_to action: 'index', user_id: current_user
+      end
+    end
+  end
+
+  def show_user_description; end
+
+  def new_user_description; end
+
+  def create_user_description
+    respond_to do |format|
+      if @shift.update_attribute(:description, shift_params[:description])
+        format.html do
+          redirect_to action: 'index', user_id: current_user
+        end
+      else
+        format.html { render :description, status: :unprocessable_entity }
       end
     end
   end
