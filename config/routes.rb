@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :user do
-    root to: 'user/shifts#index'
+    root to: 'shifts#index'
     resources :users do
       resources :shifts do
         member do
-          post 'create_user_description'
+          patch 'create_user_description'
           get  'show_user_description'
           get  'new_user_description'
         end
