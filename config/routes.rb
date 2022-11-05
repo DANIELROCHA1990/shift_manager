@@ -8,8 +8,7 @@ Rails.application.routes.draw do
     resources :users do
       resources :shifts do
         member do
-          patch 'create_user_description'
-          put 'create_user_description'
+          post 'create_user_description'
           get  'show_user_description'
           get  'new_user_description'
         end
