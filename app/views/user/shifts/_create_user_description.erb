@@ -4,12 +4,12 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <div class="form-inputs">
+  <div>
     <br/><%= f.text_area :description, cols: 60, rows: 5 %>
   </div>
 
-  <div class="form-actions">
-  <br/><%= f.submit "Salvar", class: "btn btn-success" %>
-  <%= link_to "Voltar", user_user_shifts_path(current_user), method: :get, class: "btn btn-outline-secondary" %>
-</div>
+  <div>
+    <br/><%= f.submit "Salvar", class: "btn btn-success" %>
+    <%= link_to "Voltar", user_user_shifts_path(@shift), method: :get, class: "btn btn-outline-secondary" %>
+  </div>
 <% end %>

@@ -19,7 +19,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_02_170730) do
     t.datetime "updated_at", null: false
     t.datetime "clock_in"
     t.datetime "clock_out"
-    t.string "user_name"
     t.bigint "user_id", null: false
     t.string "description"
     t.index ["user_id"], name: "index_shifts_on_user_id"

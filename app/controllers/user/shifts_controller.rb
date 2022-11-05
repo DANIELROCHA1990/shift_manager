@@ -67,10 +67,8 @@ class User::ShiftsController < ApplicationController
 
   def create_user_description
     respond_to do |format|
-      if @shift.update_attribute(:description, params[:description])
-        format.html do
-          redirect_to action: 'index', user_id: current_user
-        end
+      if @shift.update_attribute(:description, shift_params[:description])
+        format.html { redirect_to action: 'index', user_id: current_user }
       else
         format.html { render :description, status: :unprocessable_entity }
       end
