@@ -1,0 +1,30 @@
+
+<table class="table table-bordered table-dark table-striped">
+  <thead class="text-center">
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Clock_in</th>
+      <th scope="col">Clock_out</th>
+      <th scope="col">Time Work</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody class="text-center">
+    <%@shifts.each do |shift|%>
+      <tr>
+        <td><%=shift.clock_in.strftime("%d/%m/%Y")%></td>
+        <td><%= shift.clock_in.strftime("%H:%M:%S") %></td>
+        <td><%= shift.clock_out.strftime("%H:%M:%S") if shift.clock_out.present? %></td>
+        <div>
+          <%time_diff = shift.clock_out - shift.clock_in  if shift.clock_out.present?  %>
+          <%elapsed = Time.at(time_diff.to_i).strftime("%H:%M:%S")%>
+        </div>
+        <th><%=elapsed%></th>
+        <th>
+          <%= link_to 'Cria Obs', new_user_description_user_user_shift_path(current_user.id, shift.id), method: :get %>,
+          <%= link_to 'Ver Obs', show_user_description_user_user_shift_path(current_user.id, shift.id), method: :get %>
+        </th>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
