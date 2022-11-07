@@ -3,7 +3,7 @@ class User::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   def index
-    render json: { message: 'You Done!' }, status: 200
+    # render json: { message: 'You Done!' }, status: 200
   end
 
   def create

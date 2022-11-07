@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  belongs_to :admin
   has_many :shifts
   attr_writer :login
 

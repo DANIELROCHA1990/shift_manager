@@ -3,12 +3,10 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "users/registrations"}
 
-  unauthenticated do
-    root :to => 'home#index'
- end
+  unauthenticated { root :to => 'home#index' }
 
   namespace :user do
-    root to: 'shifts#index'
+    root to: 'user/shifts#index'
     resources :users do
       resources :shifts do
         member do
