@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "users/registrations"}
+
+  unauthenticated do
+    root :to => 'home#index'
+ end
 
   namespace :user do
     root to: 'shifts#index'
@@ -18,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root to: 'dashboard#index'
     resources :users do
       resources :shifts
     end
